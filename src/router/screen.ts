@@ -38,5 +38,21 @@ export const SCREEN = {
   roleManagementForm: {
     path: '/develop/role/form',
     name: 'roleManagementForm',
+  },
+  noticeManagement: {
+    path: '/notice',
+    name: 'noticeManagement',
+  },
+  noticeManagementForm: {
+    path: '/notice/form',
+    name: 'noticeManagementForm',
+  },
+  questionAnswerMng: {
+    path: '/question-answer',
+    name: 'questionAnswerMng',
+  },
+  questionAnswerMngForm: {
+    path: '/question-answer/form',
+    name: 'questionAnswerMngForm',
   }
 }

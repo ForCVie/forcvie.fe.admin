@@ -11,7 +11,7 @@ export const routes = [
     path: '/',
     component: () => import('@/layouts/DefaultLayout.vue'),
     meta: {
-      title: "계원예술대학교",
+      title: "ForC Food",
       middleware: [authMiddleware],
     },
     children: [
@@ -45,6 +45,26 @@ export const routes = [
         path: SCREEN.roleManagementForm.path,
         name: SCREEN.roleManagementForm.name,
         component: import('@/views/developer/roleMng/RoleMngForm.vue'),
+      },
+      {
+        path: SCREEN.noticeManagement.path,
+        name: SCREEN.noticeManagement.name,
+        component: import('@/views/fqaMng/notice/NoticeMng.vue'),
+      },
+      {
+        path: SCREEN.noticeManagementForm.path,
+        name: SCREEN.noticeManagementForm.name,
+        component: import('@/views/fqaMng/notice/NoticeForm.vue'),
+      },
+      {
+        path: SCREEN.questionAnswerMng.path,
+        name: SCREEN.questionAnswerMng.name,
+        component: import('@/views/fqaMng/questionAnswer/QuestionAnswerMng.vue'),
+      },
+      {
+        path: SCREEN.questionAnswerMngForm.path,
+        name: SCREEN.questionAnswerMngForm.name,
+        component: import('@/views/fqaMng/questionAnswer/QuestionAnswerForm.vue'),
       },
     ],
   },

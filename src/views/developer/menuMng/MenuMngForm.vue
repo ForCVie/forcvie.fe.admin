@@ -126,15 +126,12 @@ import InputBase from "@/components/common/input/InputBase.vue";
 import SelectBoxBaseSearch from "@/components/common/input/SelectBoxBaseSearch.vue";
 import {
   STATE_N,
-  STATE_Y,
   UP_CD_SITE,
   UP_CD_USE_YN,
 } from "@/constants/common.const";
-import global from "@/plugins/global";
 import router from "@/router";
 import { SCREEN } from "@/router/screen";
 import { commonStore } from "@/stores/common";
-import { codeMngStore } from "@/stores/common/codeMng";
 import { getListCodeMng } from "@/stores/common/codeMng/codeMng.service";
 import { CodeMngModel } from "@/stores/common/codeMng/codeMng.type";
 import {

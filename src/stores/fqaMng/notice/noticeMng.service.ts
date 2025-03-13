@@ -1,9 +1,9 @@
 import http from "@/utils/http";
 import { SITE_ADMIN } from "@/constants/common.const";
-import type { AdMenuFilterRequest, AdMenuRequest } from "./menuMng.type";
-const url = `${SITE_ADMIN}/developer/menu-mng`;
+import type { AdNoticeFilterReq, AdNoticeReq } from "./noticeMng.type";
+const url = `${SITE_ADMIN}/fqa/notice`;
 
-export const getPageData = (data: AdMenuFilterRequest) => {
+export const getPageData = (data: AdNoticeFilterReq) => {
     return http.post(url + '/list', data)
 }
 
@@ -11,7 +11,7 @@ export const getDataDetail = (data: string) => {
     return http.post(url + '/detail', data)
 }
 
-export const saveData = (data: AdMenuRequest) => {
+export const saveData = (data: AdNoticeReq) => {
     return http.post(url + '/save', data)
 }
 
@@ -21,4 +21,12 @@ export const removeData = (data: string) => {
 
 export const getDataForm = (data: string[]) => {
     return http.post(url + '/form', data)
+}
+
+export const setNoticeUp = (data: string[]) => {
+    return http.post(url + '/set-up', data)
+}
+
+export const setNoticeDown = (data: string[]) => {
+    return http.post(url + '/set-down', data)
 }
