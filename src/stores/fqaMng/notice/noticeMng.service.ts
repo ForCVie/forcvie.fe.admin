@@ -30,3 +30,7 @@ export const setNoticeUp = (data: string[]) => {
 export const setNoticeDown = (data: string[]) => {
     return http.post(url + '/set-down', data)
 }
+
+export const getFormData = () => {
+    return http.post(url + '/form')
+}

@@ -11,9 +11,9 @@
 </template>
 <script lang="ts">
 import {ref} from 'vue';
-import CodeMngModel from '../../../model/common/CodeMngModel'
 import CheckboxBase from "@/components/common/input/CheckboxBase.vue";
 import { commonStore } from '@/stores/common';
+import { CodeMngModel } from '@/stores/common/codeMng/codeMng.type';
 
 export default {
   components: {CheckboxBase},

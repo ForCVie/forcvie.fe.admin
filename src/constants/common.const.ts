@@ -24,3 +24,9 @@ export const CD_ID_USE = "10010";
 
 export const UP_CD_SITE = "10200";
 export const CD_ID_SITE_ADMIN = "10210";
+
+export const UP_CD_NOTICE_TOP_FIX = "10510";
+export const CD_ID_NOTICE_TOP = "10511";
+export const UP_CD_NOTICE_POST_CD = "10520";
+export const CD_ID_NOTICE_POST = "10521";
+

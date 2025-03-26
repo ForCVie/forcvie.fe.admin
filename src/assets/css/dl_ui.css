@@ -1003,6 +1003,11 @@ body > .loading_box {
     color: #999;
 }
 
+/* Quill Editer */
+.ql-container {
+    height: 300px !important;
+}
+
 .ql-editor strong {
     font-weight: bolder;
 }
