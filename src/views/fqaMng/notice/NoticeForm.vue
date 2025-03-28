@@ -84,7 +84,7 @@
           <button type="button" class="button btn_xs btn_white">
             {{ t("common.list") }}
           </button>
-          <button type="button" class="button btn_xs btn_blue">
+          <button type="button" @click="onSave" class="button btn_xs btn_blue">
             {{ t("common.save") }}
           </button>
           <button type="button" class="button btn_xs btn_blue">
