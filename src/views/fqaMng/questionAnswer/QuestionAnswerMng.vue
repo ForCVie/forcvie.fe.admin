@@ -10,41 +10,20 @@
           <div class="search_box col_3">
             <ul>
               <li>
-                <p>Tên Menu</p>
-                <InputBase v-model:modelValue="dataSearch.nm" id="nm" />
+                <p>Title</p>
+                <InputBase v-model:modelValue="dataSearch.title" id="title" />
               </li>
               <li>
-                <p>Sử Dụng</p>
-                <RadiobuttonBase
-                  v-for="item in radioUseYn"
-                  :value="item.cdId"
-                  v-model="dataSearch.useYn"
-                  :id="`${item.cdId}_${item.upCdId}`"
-                  :name="`${item.cdId}`"
-                  :key="item.cdId"
-                  :checked="item.cdId == dataSearch.useYn"
-                  :label="`${item.cdNm}`"
-                />
+                <p>Người trả lời</p>
+                <InputBase v-model:modelValue="dataSearch.userAnswer" id=".userAnswer" />
               </li>
               <li>
-                <p>Loại Site</p>
-                <SelectBoxBase
-                  :id="'siteType'"
-                  :name="'siteType'"
-                  v-model="dataSearch.siteType"
-                  :data="listSiteType"
-                  :required="true"
-                />
+                <p>Người hỏi</p>
+                <InputBase v-model:modelValue="dataSearch.userQuestion" id=".userQuestion" />
               </li>
               <li>
-                <p>Menu Cha</p>
-                <SelectBoxBaseSearch
-                  :id="'parentId'"
-                  :name="'parentId'"
-                  v-model="dataSearch.parentId"
-                  :data="listMenuParent"
-                  :value-select-all="t('common.select')"
-                />
+                <p>Trạng Thái</p>
+                <InputBase v-model:modelValue="dataSearch.status" id="status" />
               </li>
             </ul>
           </div>
@@ -108,13 +87,11 @@
   import { getListCodeMng } from "@/stores/common/codeMng/codeMng.service";
   import { CodeMngModel } from "@/stores/common/codeMng/codeMng.type";
   import {
-    getDataForm,
-    getPageData,
-  } from "@/stores/developer/menu/menuMng.service";
-  import {
     AdMenuFilterRequest,
     AdMenuResDTO,
   } from "@/stores/developer/menu/menuMng.type";
+import { getPageData } from "@/stores/fqaMng/questionAnswer/questionAnswer.service";
+import { AdQuestionAnswerFilterReq } from "@/stores/fqaMng/questionAnswer/questionAnswer.type";
   
   const { t } = useI18n();
   const store = commonStore();
@@ -165,11 +142,11 @@
     },
   ]);
   
-  const dataSearch = ref<AdMenuFilterRequest>({
-    nm: "",
-    parentId: "",
-    siteType: "",
-    useYn: "",
+  const dataSearch = ref<AdQuestionAnswerFilterReq>({
+    status: "",
+    title: "",
+    userAnswer: "",
+    userQuestion: "",
     page: 1,
     size: PAGINATION_PAGE_SIZE,
     sort: "",
@@ -204,14 +181,6 @@
         });
       }
     );
-    await getDataForm([""]).then((res) => {
-      listMenuParent.value = res.data.data.parentList;
-      listMenuParent.value?.unshift({
-        cdId: "",
-        cdNm: t("common.select"),
-        upCdId: "MENU_PARENT",
-      });
-    });
     store.setLoading(false);
   });
   
@@ -245,10 +214,10 @@
   
   const clearFormSearch = () => {
     dataSearch.value = {
-      nm: "",
-      parentId: "",
-      siteType: "",
-      useYn: "",
+      status: "",
+      title: "",
+      userAnswer: "",
+      userQuestion: "",
       page: 1,
       size: PAGINATION_PAGE_SIZE,
       sort: "",

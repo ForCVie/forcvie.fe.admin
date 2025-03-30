@@ -68,12 +68,12 @@
               <th scope="row" class="required">Role Nhận</th>
               <td>
                 <ListCheckBoxBase
-                          :listData="listRoleData"
-                          :mode="'show'"
-                          v-model="dataDetail.roleId"
-                          id="roleId"
-                          name="roleId"
-                      />
+                  :listData="listRoleData"
+                  :mode="'show'"
+                  v-model="dataDetail.roleId"
+                  id="roleId"
+                  name="roleId"
+                />
               </td>
             </tr>
           </tbody>
@@ -81,13 +81,18 @@
       </div>
       <div class="box_section">
         <div class="btn_area">
-          <button type="button" class="button btn_xs btn_white">
+          <button type="button" @click="back" class="button btn_xs btn_white">
             {{ t("common.list") }}
           </button>
           <button type="button" @click="onSave" class="button btn_xs btn_blue">
             {{ t("common.save") }}
           </button>
-          <button type="button" class="button btn_xs btn_blue">
+          <button
+            type="button"
+            v-if="id"
+            @click="onRemove"
+            class="button btn_xs btn_blue"
+          >
             {{ t("common.delete") }}
           </button>
         </div>
@@ -100,7 +105,12 @@
 import { useAlert, useConfirm } from "@/components/common/composables/useAlert";
 import InputBase from "@/components/common/input/InputBase.vue";
 import ListCheckBoxBase from "@/components/common/input/ListCheckBoxBase.vue";
-import { CD_ID_NOTICE_POST, CD_ID_NOTICE_TOP, UP_CD_NOTICE_POST_CD, UP_CD_NOTICE_TOP_FIX } from "@/constants/common.const";
+import {
+  CD_ID_NOTICE_POST,
+  CD_ID_NOTICE_TOP,
+  UP_CD_NOTICE_POST_CD,
+  UP_CD_NOTICE_TOP_FIX,
+} from "@/constants/common.const";
 import router from "@/router";
 import { SCREEN } from "@/router/screen";
 import { commonStore } from "@/stores/common";
@@ -179,19 +189,19 @@ onBeforeMount(async () => {
 
   id.value = window.history.state.id;
 
-  await getListCodeMng({ upCdIdList: [UP_CD_NOTICE_TOP_FIX, UP_CD_NOTICE_POST_CD] }).then(
-    (res) => {
-      listFixTopCd.value = res.data.data.filter(
-        (item: CodeMngModel) => item.upCdId == UP_CD_NOTICE_TOP_FIX
-      );
-      listPostCd.value = res.data.data.filter(
-        (item: CodeMngModel) => item.upCdId == UP_CD_NOTICE_POST_CD
-      );
-    }
-  );
+  await getListCodeMng({
+    upCdIdList: [UP_CD_NOTICE_TOP_FIX, UP_CD_NOTICE_POST_CD],
+  }).then((res) => {
+    listFixTopCd.value = res.data.data.filter(
+      (item: CodeMngModel) => item.upCdId == UP_CD_NOTICE_TOP_FIX
+    );
+    listPostCd.value = res.data.data.filter(
+      (item: CodeMngModel) => item.upCdId == UP_CD_NOTICE_POST_CD
+    );
+  });
   await getFormData().then((res) => {
-    listRoleData.value = res.data.data.listRole
-  })
+    listRoleData.value = res.data.data.listRole;
+  });
   if (id.value)
     await getDataDetail(id.value).then((res) => {
       dataDetail.value = res.data.data;
@@ -200,7 +210,7 @@ onBeforeMount(async () => {
 });
 
 const back = () => {
-  router.push({ path: SCREEN.menuManagement.path });
+  router.push({ path: SCREEN.noticeManagement.path });
 };
 
 const onSave = async () => {
@@ -250,6 +260,6 @@ const onRemove = async () => {
 const changeEditor = () => {
   // Get content
   let content = myEditor.value.getHTML().toString().replace("<p><br></p>", "");
-  console.log(content);
+  dataDetail.value = content;
 };
 </script>

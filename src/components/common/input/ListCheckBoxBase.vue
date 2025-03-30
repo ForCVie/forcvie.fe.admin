@@ -75,7 +75,11 @@ export default {
       } else {
         this.checkBoxData = [];
       }
-      this.$emit('update:modelValue', this.checkBoxData)
+      if(this.useArray) {
+        this.$emit('update:modelValue', this.checkBoxData)
+      } else {
+        this.$emit('update:modelValue', this.checkBoxData.join(','))
+      }
     },
     changOne() {
       if (this.checkBoxData.length < this.listData.length) {
@@ -83,7 +87,11 @@ export default {
       } else {
         this.checkBoxDataAll = true;
       }
-      this.$emit('update:modelValue', this.checkBoxData)
+      if(this.useArray) {
+        this.$emit('update:modelValue', this.checkBoxData)
+      } else {
+        this.$emit('update:modelValue', this.checkBoxData.join(','))
+      }
     } 
   }, 
   mounted() {
@@ -94,6 +102,8 @@ export default {
       } else {
       this.checkBoxData = this.modelValue.split(',');
       }
+      console.log(this.useArray);
+      
       if (this.checkBoxData.length == this.listData?.length) {
         this.checkBoxDataAll = true;
       }

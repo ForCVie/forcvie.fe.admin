@@ -527,6 +527,7 @@
                           name="checkAll"
                           :hasCheckAll="true"
                       />
+                      {{ checkboxGroup1 }}
                     </div>
                   </li>
                 </ul>
