@@ -86,12 +86,8 @@
   import { commonStore } from "@/stores/common";
   import { getListCodeMng } from "@/stores/common/codeMng/codeMng.service";
   import { CodeMngModel } from "@/stores/common/codeMng/codeMng.type";
-  import {
-    AdMenuFilterRequest,
-    AdMenuResDTO,
-  } from "@/stores/developer/menu/menuMng.type";
 import { getPageData } from "@/stores/fqaMng/questionAnswer/questionAnswer.service";
-import { AdQuestionAnswerFilterReq } from "@/stores/fqaMng/questionAnswer/questionAnswer.type";
+import { AdQuestionAnswerFilterReq, AdQuestionAnswerResDTO } from "@/stores/fqaMng/questionAnswer/questionAnswer.type";
   
   const { t } = useI18n();
   const store = commonStore();
@@ -186,16 +182,16 @@ import { AdQuestionAnswerFilterReq } from "@/stores/fqaMng/questionAnswer/questi
   
   const goActionCreate = () => {
     router.push({
-      name: SCREEN.menuManagementForm.name,
+      name: SCREEN.questionAnswerMngForm.name,
       params: { mode: MODE_CREATE },
     });
   };
   
-  function goAction(data: AdMenuResDTO) {
+  function goAction(data: AdQuestionAnswerResDTO) {
     router.push({
-      name: SCREEN.menuManagementForm.name,
+      name: SCREEN.questionAnswerMngForm.name,
       params: { mode: MODE_CREATE },
-      state: { id: data.menuId },
+      state: { id: data.qaSeq },
     });
   }
   
@@ -204,7 +200,7 @@ import { AdQuestionAnswerFilterReq } from "@/stores/fqaMng/questionAnswer/questi
     dataSearch.value.size = pagesSize;
     await getPageData(dataSearch.value).then((res) => {
       totalRecord.value = res.data.data.totalRecord;
-      data.value = res.data.data.data.map((item: AdMenuResDTO, index: number) => {
+      data.value = res.data.data.data.map((item: AdQuestionAnswerResDTO, index: number) => {
         item.rowNum =
           (dataSearch.value.page - 1) * dataSearch.value.size + index + 1;
         return item;

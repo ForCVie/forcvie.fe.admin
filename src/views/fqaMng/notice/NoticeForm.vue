@@ -68,8 +68,8 @@
               <th scope="row" class="required">Role Nhận</th>
               <td>
                 <ListCheckBoxBase
+                  v-if="!id || dataDetail.roleId"
                   :listData="listRoleData"
-                  :mode="'show'"
                   v-model="dataDetail.roleId"
                   id="roleId"
                   name="roleId"
@@ -78,6 +78,7 @@
             </tr>
           </tbody>
         </table>
+        {{ dataDetail }}
       </div>
       <div class="box_section">
         <div class="btn_area">
@@ -202,10 +203,13 @@ onBeforeMount(async () => {
   await getFormData().then((res) => {
     listRoleData.value = res.data.data.listRole;
   });
-  if (id.value)
+  if (id.value) {
     await getDataDetail(id.value).then((res) => {
       dataDetail.value = res.data.data;
+      myEditor.value.setHTML(dataDetail.value.content)
     });
+  }
+  
   store.setLoading(false);
 });
 
@@ -260,6 +264,6 @@ const onRemove = async () => {
 const changeEditor = () => {
   // Get content
   let content = myEditor.value.getHTML().toString().replace("<p><br></p>", "");
-  dataDetail.value = content;
+  dataDetail.value.content = content;
 };
 </script>

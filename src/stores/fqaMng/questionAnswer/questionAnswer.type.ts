@@ -25,6 +25,7 @@ export type AdQuestionAnswerDetailDTO = {
 }
 
 export type AdQuestionAnswerResDTO = {
+    rowNum: number;
     qaSeq: string;
     title: string;
     questionDate: string;

@@ -13,6 +13,42 @@
               <p>Title</p>
               <InputBase v-model:modelValue="dataSearch.title" id="title" />
             </li>
+            <li>
+              <p>Đăng bài</p>
+                <RadiobuttonBase
+                  v-for="item in listPostCd"
+                  :value="item.cdId"
+                  v-model="dataSearch.postCd"
+                  :id="`${item.cdId}_${item.upCdId}_postCd`"
+                  :name="`${item.cdId}_${item.upCdId}_postCd`"
+                  :key="`${item.cdId}_${item.upCdId}_postCd`"
+                  :checked="item.cdId == dataSearch.postCd"
+                  :label="`${item.cdNm}`"
+                />
+            </li>
+            <li>
+              <p>Đẩy top</p>
+                <RadiobuttonBase
+                  v-for="item in listFixTopCd"
+                  :value="item.cdId"
+                  v-model="dataSearch.topFixCd"
+                  :id="`${item.cdId}_${item.upCdId}_topFixCd`"
+                  :name="`${item.cdId}_${item.upCdId}_topFixCd`"
+                  :key="`${item.cdId}_${item.upCdId}_topFixCd`"
+                  :checked="item.cdId == dataSearch.topFixCd"
+                  :label="`${item.cdNm}`"
+                />
+            </li>
+            <li>
+              <p>Role Nhận</p>
+                <ListCheckBoxBase
+                  :listData="listRoleData"
+                  v-model="dataSearch.roleId"
+                  id="roleId"
+                  name="roleId"
+                  :hasCheckAll="true"
+                />
+            </li>
           </ul>
         </div>
         <div class="btn_group btn_end">
@@ -63,7 +99,7 @@
 <script setup lang="ts">
 import LinkGridComponent from "@/components/common/grid/LinkGridComponent.vue";
 import InputBase from "@/components/common/input/InputBase.vue";
-import { UP_CD_SITE, UP_CD_USE_YN } from "@/constants/common.const";
+import { UP_CD_NOTICE_POST_CD, UP_CD_NOTICE_TOP_FIX, UP_CD_SITE, UP_CD_USE_YN } from "@/constants/common.const";
 import {
   MODE_CREATE,
   PAGINATION_PAGE_SIZE,
@@ -74,7 +110,7 @@ import { SCREEN } from "@/router/screen";
 import { commonStore } from "@/stores/common";
 import { getListCodeMng } from "@/stores/common/codeMng/codeMng.service";
 import { CodeMngModel } from "@/stores/common/codeMng/codeMng.type";
-import { getPageData } from "@/stores/fqaMng/notice/noticeMng.service";
+import { getFormData, getPageData } from "@/stores/fqaMng/notice/noticeMng.service";
 import {
   AdNoticeFilterReq,
   AdNoticeResDTO,
@@ -139,34 +175,37 @@ const dataSearch = ref<AdNoticeFilterReq>({
   sort: "",
 });
 
-const radioUseYn = ref<CodeMngModel[]>();
-const listSiteType = ref<CodeMngModel[]>();
+const listPostCd = ref<CodeMngModel[]>([]);
+const listFixTopCd = ref<CodeMngModel[]>([]);
+const listRoleData = ref<CodeMngModel[]>([]);
 
 const data = ref([]);
 
 onBeforeMount(async () => {
   store.setLoading(true);
-  await getListCodeMng({ upCdIdList: [UP_CD_USE_YN, UP_CD_SITE] }).then(
-    (res) => {
-      radioUseYn.value = res.data.data.filter(
-        (item: CodeMngModel) => item.upCdId == UP_CD_USE_YN
-      );
-      listSiteType.value = res.data.data.filter(
-        (item: CodeMngModel) => item.upCdId == UP_CD_SITE
-      );
-
-      radioUseYn.value?.unshift({
-        cdId: "",
-        cdNm: t("common.select"),
-        upCdId: UP_CD_USE_YN,
-      });
-      listSiteType.value?.unshift({
-        cdId: "",
-        cdNm: t("common.select"),
-        upCdId: UP_CD_USE_YN,
-      });
-    }
-  );
+  await getListCodeMng({
+    upCdIdList: [UP_CD_NOTICE_TOP_FIX, UP_CD_NOTICE_POST_CD],
+  }).then((res) => {
+    listFixTopCd.value = res.data.data.filter(
+      (item: CodeMngModel) => item.upCdId == UP_CD_NOTICE_TOP_FIX
+    );
+    listFixTopCd.value.unshift({
+      cdId: "",
+      cdNm: t('common.all'),
+      upCdId: UP_CD_NOTICE_TOP_FIX
+    })
+    listPostCd.value = res.data.data.filter(
+      (item: CodeMngModel) => item.upCdId == UP_CD_NOTICE_POST_CD
+    );
+    listPostCd.value.unshift({
+      cdId: "",
+      cdNm: t('common.all'),
+      upCdId: UP_CD_NOTICE_TOP_FIX
+    })
+  });
+  await getFormData().then((res) => {
+    listRoleData.value = res.data.data.listRole;
+  });
   store.setLoading(false);
 });
 

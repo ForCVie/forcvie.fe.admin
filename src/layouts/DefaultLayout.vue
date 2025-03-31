@@ -29,7 +29,6 @@ import THeader from "@/layouts/components/THeader.vue";
 import TFooter from "@/layouts/components/TFooter.vue";
 import LoadingComponent from "@/components/common/loading/LoaddingComponent.vue";
 import { commonStore } from "@/stores/common";
-import TNavTree from "./components/TNavTree.vue";
 import CommonService from "@/service/common/CommonService";
 
 const store = commonStore();
