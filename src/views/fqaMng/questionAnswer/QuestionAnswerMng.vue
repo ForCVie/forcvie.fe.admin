@@ -10,7 +10,7 @@
           <div class="search_box col_3">
             <ul>
               <li>
-                <p>Title</p>
+                <p>Tiêu Đề</p>
                 <InputBase v-model:modelValue="dataSearch.title" id="title" />
               </li>
               <li>
@@ -110,28 +110,28 @@ import { AdQuestionAnswerFilterReq, AdQuestionAnswerResDTO } from "@/stores/fqaM
       },
     },
     {
-      headerName: "Tên",
-      field: "nm",
+      headerName: "Tiêu Đề",
+      field: "title",
       cellRenderer: LinkGridComponent,
       cellRendererParams: { onCustomEvent: goAction },
     },
     {
-      headerName: "Site Type",
-      field: "siteType",
+      headerName: "Ngày hỏi",
+      field: "questionDate",
       cellStyle: {
         textAlign: "center",
       },
     },
     {
-      headerName: "Sử dụng",
-      field: "useYn",
+      headerName: "Người Hỏi",
+      field: "userQuestion",
       cellStyle: {
         textAlign: "center",
       },
     },
     {
-      headerName: "Menu Cha",
-      field: "parent",
+      headerName: "Người Trả Lời",
+      field: "userAnswer",
       cellStyle: {
         textAlign: "center",
       },

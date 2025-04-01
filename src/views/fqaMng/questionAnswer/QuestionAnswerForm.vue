@@ -14,9 +14,51 @@
           </colgroup>
           <tbody>
             <tr>
-              <th scope="row" class="required">Tên Menu</th>
+              <th scope="row" class="required">Tiêu Đề</th>
               <td class="td_input">
-                <InputBase id="nm" required />
+                <InputBase v-model:modelValue="dataDetail.title" id="title" readonly />
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" class="required">Người Hỏi</th>
+              <td class="td_input">
+                <InputBase v-model:modelValue="dataDetail.userQuestion" id="title" readonly />
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" class="required">Ngày Hỏi</th>
+              <td class="td_input">
+                <BaseDatePicker v-model:modelValue="dataDetail.questionDate" id="title" readonly />
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" class="required">Câu Hỏi</th>
+              <td class="td_input">
+                <InputBase v-model:modelValue="dataDetail.question" id="title" readonly />
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" class="required">Tiêu Đề</th>
+              <td class="td_input">
+                <InputBase v-model:modelValue="dataDetail.title" id="title" readonly />
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" class="required">Tiêu Đề</th>
+              <td class="td_input">
+                <InputBase v-model:modelValue="dataDetail.title" id="title" readonly />
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" class="required">Tiêu Đề</th>
+              <td class="td_input">
+                <InputBase v-model:modelValue="dataDetail.title" id="title" readonly />
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" class="required">Tiêu Đề</th>
+              <td class="td_input">
+                <InputBase v-model:modelValue="dataDetail.title" id="title" readonly />
               </td>
             </tr>
           </tbody>
@@ -24,14 +66,14 @@
       </div>
       <div class="box_section">
         <div class="btn_area">
-          <button type="button" class="button btn_xs btn_white">
+          <button @click="back" type="button" class="button btn_xs btn_white">
             {{ t("common.list") }}
           </button>
           <button type="button" class="button btn_xs btn_blue">
-            {{ t("common.save") }}
+            {{ t("common.saveTemp") }}
           </button>
           <button type="button" class="button btn_xs btn_blue">
-            {{ t("common.delete") }}
+            {{ t("common.save") }}
           </button>
         </div>
       </div>
@@ -41,8 +83,12 @@
 
 <script setup lang="ts">
 import { useAlert, useConfirm } from "@/components/common/composables/useAlert";
+import BaseDatePicker from "@/components/common/datepicker/BaseDatePicker.vue";
 import InputBase from "@/components/common/input/InputBase.vue";
+import router from "@/router";
+import { SCREEN } from "@/router/screen";
 import { commonStore } from "@/stores/common";
+import { AdQuestionAnswerDetailDTO } from "@/stores/fqaMng/questionAnswer/questionAnswer.type";
 
 const { t } = useI18n();
 const store = commonStore();
@@ -55,4 +101,19 @@ const pageTitle = ref("Trả Lời Câu Hỏi");
 const breadcrumbItems = ref([
   { label: t("talentEduGoalsMng.breadcrumb.01"), link: "/" },
 ]);
+
+const dataDetail = ref<AdQuestionAnswerDetailDTO>({
+  answer: "",
+  answerDate: new Date,
+  qaSeq: "",
+  question: "",
+  questionDate: new Date,
+  title: "",
+  userAnswer: "",
+  userQuestion: ""
+});
+
+const back = () => {
+  router.push({ path: SCREEN.noticeManagement.path });
+};
 </script>
