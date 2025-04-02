@@ -54,5 +54,13 @@ export const SCREEN = {
   questionAnswerMngForm: {
     path: '/faq/question-answer/form',
     name: 'questionAnswerMngForm',
-  }
+  },
+  bannerMng: {
+    path: '/promotion/banner',
+    name: 'bannerMng'
+  },
+  bannerMngForm: {
+    path: '/promotion/banner/form',
+    name: 'bannerMngForm'
+  },
 }

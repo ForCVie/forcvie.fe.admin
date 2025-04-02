@@ -66,6 +66,16 @@ export const routes = [
         name: SCREEN.questionAnswerMngForm.name,
         component: import('@/views/fqaMng/questionAnswer/QuestionAnswerForm.vue'),
       },
+      {
+        path: SCREEN.bannerMng.path,
+        name: SCREEN.bannerMng.name,
+        component: import('@/views/promotionMng/bannerMng/BannerMng.vue'),
+      },
+      {
+        path: SCREEN.bannerMngForm.path,
+        name: SCREEN.bannerMngForm.name,
+        component: import('@/views/promotionMng/bannerMng/BannerMngForm.vue'),
+      },
     ],
   },
   // {

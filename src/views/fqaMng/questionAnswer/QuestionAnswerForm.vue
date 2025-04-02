@@ -16,49 +16,67 @@
             <tr>
               <th scope="row" class="required">Tiêu Đề</th>
               <td class="td_input">
-                <InputBase v-model:modelValue="dataDetail.title" id="title" readonly />
+                <InputBase
+                  v-model:modelValue="dataDetail.title"
+                  id="title"
+                  readonly
+                />
               </td>
             </tr>
             <tr>
               <th scope="row" class="required">Người Hỏi</th>
               <td class="td_input">
-                <InputBase v-model:modelValue="dataDetail.userQuestion" id="title" readonly />
+                <InputBase
+                  v-model:modelValue="dataDetail.userQuestion"
+                  id="userQuestion"
+                  readonly
+                />
               </td>
             </tr>
             <tr>
               <th scope="row" class="required">Ngày Hỏi</th>
               <td class="td_input">
-                <BaseDatePicker v-model:modelValue="dataDetail.questionDate" id="title" readonly />
+                <BaseDatePicker
+                  v-model:modelValue="dataDetail.questionDate"
+                  id="questionDate"
+                  readonly
+                />
               </td>
             </tr>
             <tr>
               <th scope="row" class="required">Câu Hỏi</th>
               <td class="td_input">
-                <InputBase v-model:modelValue="dataDetail.question" id="title" readonly />
+                <TextArea
+                  v-model:modelValue="dataDetail.question"
+                  id="question"
+                  readonly
+                />
               </td>
             </tr>
             <tr>
-              <th scope="row" class="required">Tiêu Đề</th>
+              <th scope="row" class="required">Người Trả Lời</th>
               <td class="td_input">
-                <InputBase v-model:modelValue="dataDetail.title" id="title" readonly />
+                <InputBase
+                  v-model:modelValue="dataDetail.userAnswer"
+                  id="userAnswer"
+                  readonly
+                />
               </td>
             </tr>
             <tr>
-              <th scope="row" class="required">Tiêu Đề</th>
+              <th scope="row" class="required">Ngày Trả Lời</th>
               <td class="td_input">
-                <InputBase v-model:modelValue="dataDetail.title" id="title" readonly />
+                <BaseDatePicker
+                  v-model:modelValue="dataDetail.answerDate"
+                  id="answerDate"
+                  readonly
+                />
               </td>
             </tr>
             <tr>
-              <th scope="row" class="required">Tiêu Đề</th>
+              <th scope="row" class="required">Trả Lời</th>
               <td class="td_input">
-                <InputBase v-model:modelValue="dataDetail.title" id="title" readonly />
-              </td>
-            </tr>
-            <tr>
-              <th scope="row" class="required">Tiêu Đề</th>
-              <td class="td_input">
-                <InputBase v-model:modelValue="dataDetail.title" id="title" readonly />
+                <TextArea v-model:modelValue="dataDetail.answer" id="answer" />
               </td>
             </tr>
           </tbody>
@@ -85,6 +103,7 @@
 import { useAlert, useConfirm } from "@/components/common/composables/useAlert";
 import BaseDatePicker from "@/components/common/datepicker/BaseDatePicker.vue";
 import InputBase from "@/components/common/input/InputBase.vue";
+import TextArea from "@/components/common/input/TextArea.vue";
 import router from "@/router";
 import { SCREEN } from "@/router/screen";
 import { commonStore } from "@/stores/common";
@@ -104,16 +123,16 @@ const breadcrumbItems = ref([
 
 const dataDetail = ref<AdQuestionAnswerDetailDTO>({
   answer: "",
-  answerDate: new Date,
+  answerDate: new Date(),
   qaSeq: "",
   question: "",
-  questionDate: new Date,
+  questionDate: new Date(),
   title: "",
   userAnswer: "",
-  userQuestion: ""
+  userQuestion: "",
 });
 
 const back = () => {
-  router.push({ path: SCREEN.noticeManagement.path });
+  router.push({ path: SCREEN.questionAnswerMng.path });
 };
 </script>
