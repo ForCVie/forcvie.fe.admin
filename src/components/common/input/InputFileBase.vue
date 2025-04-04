@@ -22,7 +22,7 @@
       class="btn_round2 btn_white btn_sm"
       :for="id"
     >
-      파일 추가
+      Lựa chọn
     </label>
     <div class="attach_file_list">
       <div class="file_row" v-for="item in fileInfo" :key="item.fileUrl">
@@ -538,6 +538,7 @@ export default {
   right: 0;
   width: 24px;
   height: 24px;
+  z-index: 1;
 }
 .attach_filewrap {
   padding-left: 0px;
