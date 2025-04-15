@@ -115,20 +115,20 @@ const columnDefs = ref([
   },
   {
     headerName: "Tiêu Đề",
-    field: "title",
+    field: "bannerNm",
     cellRenderer: LinkGridComponent,
     cellRendererParams: { onCustomEvent: goAction },
   },
   {
     headerName: "URL",
-    field: "questionDate",
+    field: "url",
     cellStyle: {
       textAlign: "center",
     },
   },
   {
     headerName: "Sử Dụng",
-    field: "userQuestion",
+    field: "useYn",
     cellStyle: {
       textAlign: "center",
     },

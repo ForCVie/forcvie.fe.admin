@@ -19,18 +19,16 @@
                 <InputBase
                   v-model:modelValue="dataDetail.bannerNm"
                   id="title"
-                  readonly
                 />
               </td>
             </tr>
             <tr>
               <th scope="row" class="required">Thể Loại</th>
               <td class="td_input">
-                <SelectBoxBaseSearch
-                  v-model="dataDetail.bannerType"
-                  :data="listSelectBoxSearch"
-                  value-select-all="All"
-                ></SelectBoxBaseSearch>
+                <InputBase
+                  v-model:modelValue="dataDetail.bannerType"
+                  id="bannerType"
+                />
               </td>
             </tr>
             <tr>
@@ -38,8 +36,7 @@
               <td class="td_input">
                 <InputBase
                   v-model:modelValue="dataDetail.url"
-                  id="title"
-                  readonly
+                  id="url"
                 />
               </td>
             </tr>
@@ -47,7 +44,7 @@
               <th scope="row" class="required">Sử Dụng</th>
               <td class="td_input">
                 <RadiobuttonBase
-                  v-for="item in listPostCd"
+                  v-for="item in listUseYn"
                   :value="item.cdId"
                   v-model="dataDetail.useYn"
                   :id="`${item.cdId}_${item.upCdId}`"
@@ -64,10 +61,9 @@
                 <InputFileBase
                   :id="'id3'"
                   :name="'id3'"
-                  :previewFlag="true"
                   :type="FILE_TYPE_IMAGE"
                   :referKey="3"
-                  :mode="'create'"
+                  :mode="MODE_EDIT"
                   :multiple="true"
                   :maxFile="1"
                   ref="childRefUpLoad"
@@ -89,6 +85,9 @@
           <button type="button" @click="onSave" class="button btn_xs btn_blue">
             {{ t("common.save") }}
           </button>
+          <button v-if="id" type="button" @click="onRemove" class="button btn_xs btn_blue">
+            {{ t("common.delete") }}
+          </button>
         </div>
       </div>
     </div>
@@ -99,11 +98,13 @@
 import { useAlert, useConfirm } from "@/components/common/composables/useAlert";
 import InputBase from "@/components/common/input/InputBase.vue";
 import InputFileBase from "@/components/common/input/InputFileBase.vue";
-import { FILE_TYPE_IMAGE } from "@/constants/screen.const";
+import { CD_ID_USE, UP_CD_USE_YN } from "@/constants/common.const";
+import { FILE_TYPE_IMAGE, MODE_EDIT } from "@/constants/screen.const";
 import router from "@/router";
 import { SCREEN } from "@/router/screen";
 import { commonStore } from "@/stores/common";
 import { getListCodeMng } from "@/stores/common/codeMng/codeMng.service";
+import { CodeMngModel } from "@/stores/common/codeMng/codeMng.type";
 import { getDataDetail, removeData, saveData } from "@/stores/promotionMng/bannerMng/bannerMng.service";
 import { AdBannerDetailDTO, AdBannerReq } from "@/stores/promotionMng/bannerMng/bannerMng.type";
 
@@ -122,26 +123,24 @@ const breadcrumbItems = ref([
 const dataDetail = ref<AdBannerDetailDTO>({
   bannerSeq: "",
   bannerNm: "",
-  useYn: "",
+  useYn: CD_ID_USE,
   url: "",
   bannerType: "",
 });
+
+const listUseYn = ref<CodeMngModel[]>();
 
 onBeforeMount(async () => {
   store.setLoading(true);
 
   id.value = window.history.state.id;
 
-  await getListCodeMng({
-    upCdIdList: [UP_CD_NOTICE_TOP_FIX, UP_CD_NOTICE_POST_CD],
-  }).then((res) => {
-    listFixTopCd.value = res.data.data.filter(
-      (item: CodeMngModel) => item.upCdId == UP_CD_NOTICE_TOP_FIX
-    );
-    listPostCd.value = res.data.data.filter(
-      (item: CodeMngModel) => item.upCdId == UP_CD_NOTICE_POST_CD
-    );
-  });
+  await getListCodeMng({ upCdIdList: [UP_CD_USE_YN] }).then(
+    (res) => {
+      listUseYn.value = res.data.data.filter(
+        (item: CodeMngModel) => item.upCdId == UP_CD_USE_YN
+      );
+    });
   if (id.value) {
     await getDataDetail(id.value).then((res) => {
       dataDetail.value = res.data.data;
@@ -152,7 +151,7 @@ onBeforeMount(async () => {
 });
 
 const back = () => {
-  router.push({ path: SCREEN.questionAnswerMng.path });
+  router.push({ path: SCREEN.bannerMng.path });
 };
 const onSave = async () => {
   if (store.check) {
