@@ -1,5 +1,5 @@
-export type AdPopupNoticeResDTO = {
-    popupNoticeSeq: string;
+export type AdBannerTeeResDTO = {
+    bannerTeeSeq: string;
     title: string;
     url: string;
     useYn: string;
@@ -8,7 +8,7 @@ export type AdPopupNoticeResDTO = {
     rowNum: number;
 }
 
-export type AdPopupNoticeFilterReq = {
+export type AdBannerTeeFilterReq = {
     title: string;
     url: string;
     useYn: string;
@@ -19,19 +19,21 @@ export type AdPopupNoticeFilterReq = {
     sort: string;
 }
 
-export type AdPopupNoticeDetailDTO = {
-    popupNoticeSeq: string;
+export type AdBannerTeeDetailDTO = {
+    bannerTeeSeq: string;
     title: string;
     url: string;
+    content: string;
     useYn: string;
     startDate: Date;
     endDate: Date;
 }
 
-export type AdPopupNoticeReq = {
-    popupNoticeSeq: string;
+export type AdBannerTeeReq = {
+    bannerTeeSeq: string;
     title: string;
     url: string;
+    content: string;
     useYn: string;
     startDate: Date;
     endDate: Date;

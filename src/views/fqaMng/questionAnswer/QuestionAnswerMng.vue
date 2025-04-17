@@ -167,12 +167,12 @@ import { AdQuestionAnswerFilterReq, AdQuestionAnswerResDTO } from "@/stores/fqaM
   
         radioUseYn.value?.unshift({
           cdId: "",
-          cdNm: t("common.select"),
+          cdNm: t("common.all"),
           upCdId: UP_CD_USE_YN,
         });
         listSiteType.value?.unshift({
           cdId: "",
-          cdNm: t("common.select"),
+          cdNm: t("common.all"),
           upCdId: UP_CD_USE_YN,
         });
       }

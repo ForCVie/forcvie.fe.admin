@@ -28,8 +28,17 @@
               />
             </li>
             <li>
-              <p>Trạng Thái</p>
-              <InputBase v-model:modelValue="dataSearch.useYn" id="useYn" />
+              <p>Sử Dụng</p>
+              <RadiobuttonBase
+                  v-for="item in listUseYn"
+                  :value="item.cdId"
+                  v-model="dataSearch.useYn"
+                  :id="`${item.cdId}_${item.upCdId}`"
+                  :name="`${item.cdId}`"
+                  :key="item.cdId"
+                  :checked="item.cdId == dataSearch.useYn"
+                  :label="`${item.cdNm}`"
+                />
             </li>
           </ul>
         </div>
@@ -81,6 +90,7 @@
 <script setup lang="ts">
 import LinkGridComponent from "@/components/common/grid/LinkGridComponent.vue";
 import InputBase from "@/components/common/input/InputBase.vue";
+import { UP_CD_USE_YN } from "@/constants/common.const";
 import {
   MODE_CREATE,
   PAGINATION_PAGE_SIZE,
@@ -89,6 +99,7 @@ import {
 import router from "@/router";
 import { SCREEN } from "@/router/screen";
 import { commonStore } from "@/stores/common";
+import { getListCodeMng } from "@/stores/common/codeMng/codeMng.service";
 import { CodeMngModel } from "@/stores/common/codeMng/codeMng.type";
 import { getPageData } from "@/stores/promotionMng/bannerMng/bannerMng.service";
 import { AdBannerFilterReq, AdBannerResDTO } from "@/stores/promotionMng/bannerMng/bannerMng.type";
@@ -145,35 +156,24 @@ const dataSearch = ref<AdBannerFilterReq>({
   sort: "",
 });
 
-const radioUseYn = ref<CodeMngModel[]>();
-const listSiteType = ref<CodeMngModel[]>();
-const listMenuParent = ref<CodeMngModel[]>();
-
 const data = ref([]);
+
+const listUseYn = ref<CodeMngModel[]>();
 
 onBeforeMount(async () => {
   store.setLoading(true);
-//   await getListCodeMng({ upCdIdList: [UP_CD_USE_YN, UP_CD_SITE] }).then(
-//     (res) => {
-//       radioUseYn.value = res.data.data.filter(
-//         (item: CodeMngModel) => item.upCdId == UP_CD_USE_YN
-//       );
-//       listSiteType.value = res.data.data.filter(
-//         (item: CodeMngModel) => item.upCdId == UP_CD_SITE
-//       );
-
-//       radioUseYn.value?.unshift({
-//         cdId: "",
-//         cdNm: t("common.select"),
-//         upCdId: UP_CD_USE_YN,
-//       });
-//       listSiteType.value?.unshift({
-//         cdId: "",
-//         cdNm: t("common.select"),
-//         upCdId: UP_CD_USE_YN,
-//       });
-//     }
-//   );
+  
+  await getListCodeMng({ upCdIdList: [UP_CD_USE_YN] }).then(
+    (res) => {
+      listUseYn.value = res.data.data.filter(
+        (item: CodeMngModel) => item.upCdId == UP_CD_USE_YN
+      );
+      listUseYn.value?.unshift({
+          cdId: "",
+          cdNm: t("common.all"),
+          upCdId: UP_CD_USE_YN,
+        });
+    });
   store.setLoading(false);
 });
 
