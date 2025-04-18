@@ -43,7 +43,7 @@ export default defineComponent({
   inheritAttrs: false,
   props: {
     modelValue: {
-      type: [String,Date],
+      type: [String,Date,null],
       required: true
     },
     isRequired: {

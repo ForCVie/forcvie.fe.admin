@@ -139,7 +139,7 @@ tr > td.active {
 /* region Start of datePicker styling */
 .datepicker_container {
 	position: relative;
-	width: 100%;
+	/* width: 100%; */
 }
 .datepicker-wrapper {
 	margin-top: 4px;

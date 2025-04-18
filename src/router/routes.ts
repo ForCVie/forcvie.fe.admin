@@ -76,6 +76,26 @@ export const routes = [
         name: SCREEN.bannerMngForm.name,
         component: import('@/views/promotionMng/bannerMng/BannerMngForm.vue'),
       },
+      {
+        path: SCREEN.bannerTeeMng.path,
+        name: SCREEN.bannerTeeMng.name,
+        component: import('@/views/promotionMng/bannerTee/BannerTee.vue'),
+      },
+      {
+        path: SCREEN.bannerTeeMngForm.path,
+        name: SCREEN.bannerTeeMngForm.name,
+        component: import('@/views/promotionMng/bannerTee/BannerTeeForm.vue'),
+      },
+      {
+        path: SCREEN.popupPromotion.path,
+        name: SCREEN.popupPromotion.name,
+        component: import('@/views/promotionMng/popupPromotion/PopupPromotionMng.vue'),
+      },
+      {
+        path: SCREEN.popupPromotionFrom.path,
+        name: SCREEN.popupPromotionFrom.name,
+        component: import('@/views/promotionMng/popupPromotion/PopupPromotionForm.vue'),
+      },
     ],
   },
   // {

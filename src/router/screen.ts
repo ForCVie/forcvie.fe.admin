@@ -63,4 +63,20 @@ export const SCREEN = {
     path: '/promotion/banner/form',
     name: 'bannerMngForm'
   },
+  bannerTeeMng: {
+    path: '/promotion/banner-tee',
+    name: 'bannerTeeMng'
+  },
+  bannerTeeMngForm: {
+    path: '/promotion/banner-tee/form',
+    name: 'bannerTeeMngForm'
+  },
+  popupPromotion: {
+    path: '/promotion/popup-notice',
+    name: 'popupPromotion'
+  },
+  popupPromotionFrom: {
+    path: '/promotion/popup-notice/form',
+    name: 'popupPromotionFrom'
+  },
 }

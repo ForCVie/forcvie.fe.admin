@@ -6,14 +6,15 @@ export type AdBannerTeeResDTO = {
     startDate: string;
     endDate: string;
     rowNum: number;
+    action: string;
 }
 
 export type AdBannerTeeFilterReq = {
     title: string;
     url: string;
     useYn: string;
-    startDate: Date;
-    endDate: Date;
+    startDate: Date | null;
+    endDate: Date | null;
     page: number;
     size: number;
     sort: string;
@@ -25,8 +26,8 @@ export type AdBannerTeeDetailDTO = {
     url: string;
     content: string;
     useYn: string;
-    startDate: Date;
-    endDate: Date;
+    startDate: Date | null;
+    endDate: Date | null;
 }
 
 export type AdBannerTeeReq = {
@@ -35,6 +36,6 @@ export type AdBannerTeeReq = {
     url: string;
     content: string;
     useYn: string;
-    startDate: Date;
-    endDate: Date;
+    startDate: Date | null;
+    endDate: Date | null;
 }

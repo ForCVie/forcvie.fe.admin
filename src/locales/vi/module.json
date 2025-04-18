@@ -22,6 +22,8 @@
       "search": "Tìm kiếm",
       "list": "Danh sách"
     },
+    "action": "Hoạt Động",
+    "unaction": "Không hoạt động",
     "message" : {
       "deleteFile": "Bạn có chắc chắn muốn xóa File không?",
       "deleteFileOk": "Xóa File thành công.",
