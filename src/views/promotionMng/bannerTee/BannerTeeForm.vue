@@ -74,10 +74,15 @@
                 <div class="dp_flex al_center">
                   <BaseDatePicker
                     class="wd_200"
+                    :placeholder="t('common.startDate')"
                     v-model="dataDetail.startDate"
                   />
                   <span class="mg_5"> ~ </span>
-                  <BaseDatePicker class="wd_200" v-model="dataDetail.endDate" />
+                  <BaseDatePicker
+                    class="wd_200"
+                    :placeholder="t('common.startDate')"
+                    v-model="dataDetail.endDate"
+                  />
                 </div>
               </td>
             </tr>

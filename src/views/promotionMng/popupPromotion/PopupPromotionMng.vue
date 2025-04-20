@@ -99,12 +99,11 @@ import { SCREEN } from "@/router/screen";
 import { commonStore } from "@/stores/common";
 import { getListCodeMng } from "@/stores/common/codeMng/codeMng.service";
 import { CodeMngModel } from "@/stores/common/codeMng/codeMng.type";
-import { AdBannerFilterReq } from "@/stores/promotionMng/bannerMng/bannerMng.type";
-import { getPageData } from "@/stores/promotionMng/bannerTeeMng/bannerTeeMng.service";
+import { getPageData } from "@/stores/promotionMng/popupPromotion/popupPromotion.service";
 import {
-  AdBannerTeeFilterReq,
-  AdBannerTeeResDTO,
-} from "@/stores/promotionMng/bannerTeeMng/bannerTeeMng.type";
+  AdPopupNoticeFilterReq,
+  AdPopupNoticeResDTO,
+} from "@/stores/promotionMng/popupPromotion/popupPromotion.type";
 
 const { t } = useI18n();
 const store = commonStore();
@@ -176,7 +175,7 @@ const columnDefs = ref([
   },
 ]);
 
-const dataSearch = ref<AdBannerTeeFilterReq>({
+const dataSearch = ref<AdPopupNoticeFilterReq>({
   endDate: null,
   startDate: null,
   title: "",
@@ -209,16 +208,16 @@ onBeforeMount(async () => {
 
 const goActionCreate = () => {
   router.push({
-    name: SCREEN.bannerTeeMngForm.name,
+    name: SCREEN.popupPromotionFrom.name,
     params: { mode: MODE_CREATE },
   });
 };
 
-function goAction(data: AdBannerTeeResDTO) {
+function goAction(data: AdPopupNoticeResDTO) {
   router.push({
-    name: SCREEN.bannerTeeMngForm.name,
+    name: SCREEN.popupPromotionFrom.name,
     params: { mode: MODE_CREATE },
-    state: { id: data.bannerTeeSeq },
+    state: { id: data.popupNoticeSeq },
   });
 }
 
@@ -228,18 +227,21 @@ const fnPagination = async (pageNumber: number, pagesSize: number) => {
   await getPageData(dataSearch.value).then((res) => {
     totalRecord.value = res.data.data.totalRecord;
     data.value = res.data.data.data.map(
-      (item: AdBannerTeeResDTO, index: number) => {
+      (item: AdPopupNoticeResDTO, index: number) => {
         item.rowNum =
           (dataSearch.value.page - 1) * dataSearch.value.size + index + 1;
-          if (item.startDate && item.endDate) {
-            const now = new Date();
-            const start = new Date(item.startDate);
-            const end = new Date(item.endDate);
+        if (item.startDate && item.endDate) {
+          const now = new Date();
+          const start = new Date(item.startDate);
+          const end = new Date(item.endDate);
 
-            item.action = (now >= start && now <= end) ? t('common.action') : t('common.unaction');
-            } else {
-            item.action = "Không rõ thời gian";
-            }
+          item.action =
+            now >= start && now <= end
+              ? t("common.action")
+              : t("common.unaction");
+        } else {
+          item.action = "Không rõ thời gian";
+        }
         return item;
       }
     );

@@ -16,19 +16,7 @@
             <tr>
               <th scope="row" class="required">Tiêu Đề</th>
               <td class="td_input">
-                <InputBase
-                  v-model:modelValue="dataDetail.bannerNm"
-                  id="title"
-                />
-              </td>
-            </tr>
-            <tr>
-              <th scope="row" class="required">Thể Loại</th>
-              <td class="td_input">
-                <InputBase
-                  v-model:modelValue="dataDetail.bannerType"
-                  id="bannerType"
-                />
+                <InputBase v-model:modelValue="dataDetail.title" id="title" />
               </td>
             </tr>
             <tr>
@@ -59,7 +47,7 @@
                   :id="'id3'"
                   :name="'id3'"
                   :type="FILE_TYPE_IMAGE"
-                  :referKey="3"
+                  :referKey="id"
                   :mode="MODE_EDIT"
                   :multiple="true"
                   :maxFile="1"
@@ -69,6 +57,24 @@
                   :sectionName="'sectionName'"
                 >
                 </InputFileBase>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" class="required">Thời gian</th>
+              <td>
+                <div class="dp_flex al_center">
+                  <BaseDatePicker
+                    class="wd_200"
+                    :placeholder="t('common.startDate')"
+                    v-model="dataDetail.startDate"
+                  />
+                  <span class="mg_5"> ~ </span>
+                  <BaseDatePicker
+                    class="wd_200"
+                    :placeholder="t('common.startDate')"
+                    v-model="dataDetail.endDate"
+                  />
+                </div>
               </td>
             </tr>
           </tbody>
@@ -111,11 +117,11 @@ import {
   getDataDetail,
   removeData,
   saveData,
-} from "@/stores/promotionMng/bannerMng/bannerMng.service";
+} from "@/stores/promotionMng/popupPromotion/popupPromotion.service";
 import {
-  AdBannerDetailDTO,
-  AdBannerReq,
-} from "@/stores/promotionMng/bannerMng/bannerMng.type";
+  AdPopupNoticeDetailDTO,
+  AdPopupNoticeReq,
+} from "@/stores/promotionMng/popupPromotion/popupPromotion.type";
 
 const { t } = useI18n();
 const store = commonStore();
@@ -124,18 +130,20 @@ const confirm = useConfirm();
 
 const id = ref<string>();
 
-const pageTitle = ref("Quản Lý Banner");
+const pageTitle = ref("Quản Lý Modal Notice");
 const breadcrumbItems = ref([
   { label: t("talentEduGoalsMng.breadcrumb.01"), link: "/" },
 ]);
 
-const dataDetail = ref<AdBannerDetailDTO>({
-  bannerSeq: "",
-  bannerNm: "",
+const dataDetail = ref<AdPopupNoticeDetailDTO>({
+  popupNoticeSeq: "",
+  title: "",
   useYn: CD_ID_USE,
   url: "",
-  bannerType: "",
+  endDate: null,
+  startDate: null,
 });
+const childRefUpLoad = ref();
 
 const listUseYn = ref<CodeMngModel[]>();
 
@@ -159,7 +167,7 @@ onBeforeMount(async () => {
 });
 
 const back = () => {
-  router.push({ path: SCREEN.bannerMng.path });
+  router.push({ path: SCREEN.popupPromotion.path });
 };
 const onSave = async () => {
   if (store.check) {
@@ -176,8 +184,9 @@ const onSave = async () => {
     async () => {
       const dataSave = {
         ...dataDetail.value,
-      } as AdBannerReq;
+      } as AdPopupNoticeReq;
       await saveData(dataSave).then((res) => {
+        childRefUpLoad.value.upLoadFile(res.data.data);
         alert(t("common.message.saveSuccess"), t("common.alertTitle"), () => {
           back();
         });

@@ -28,6 +28,7 @@
                 <InputBase
                   v-model:modelValue="dataDetail.bannerType"
                   id="bannerType"
+                  :readonly="id"
                 />
               </td>
             </tr>
@@ -62,14 +63,14 @@
                   :id="'id3'"
                   :name="'id3'"
                   :type="FILE_TYPE_IMAGE"
-                  :referKey="3"
+                  :referKey="dataDetail.bannerType"
                   :mode="MODE_EDIT"
                   :multiple="true"
-                  :maxFile="1"
+                  :maxFile="5"
                   ref="childRefUpLoad"
-                  :orgName="'orgName'"
-                  :category="'category'"
-                  :sectionName="'sectionName'"
+                  :orgName="'BANNER'"
+                  :category="'BANNER'"
+                  :sectionName="'BANNER'"
                 >
                 </InputFileBase>
               </td>
@@ -128,6 +129,8 @@ const dataDetail = ref<AdBannerDetailDTO>({
   bannerType: "",
 });
 
+const childRefUpLoad = ref();
+
 const listUseYn = ref<CodeMngModel[]>();
 
 onBeforeMount(async () => {
@@ -170,6 +173,7 @@ const onSave = async () => {
         ...dataDetail.value,
       } as AdBannerReq;
       await saveData(dataSave).then((res) => {
+        childRefUpLoad.value.upLoadFile(dataSave.bannerType);
         alert(t("common.message.saveSuccess"), t("common.alertTitle"), () => {
           back();
         });
