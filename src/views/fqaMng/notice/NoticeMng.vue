@@ -106,7 +106,7 @@ import {
   PAGINATION_PAGE_SIZE_SELECTOR,
 } from "@/constants/screen.const";
 import router from "@/router";
-import { SCREEN } from "@/router/screen";
+import { fqaRoute } from "@/router/routeItems/fqaRoute";
 import { commonStore } from "@/stores/common";
 import { getListCodeMng } from "@/stores/common/codeMng/codeMng.service";
 import { CodeMngModel } from "@/stores/common/codeMng/codeMng.type";
@@ -211,14 +211,14 @@ onBeforeMount(async () => {
 
 const goActionCreate = () => {
   router.push({
-    name: SCREEN.noticeManagementForm.name,
+    name: fqaRoute.noticeManagementForm.name,
     params: { mode: MODE_CREATE },
   });
 };
 
 function goAction(data: AdNoticeResDTO) {
   router.push({
-    name: SCREEN.noticeManagementForm.name,
+    name: fqaRoute.noticeManagementForm.name,
     params: { mode: MODE_CREATE },
     state: { id: data.noticeSeq },
   });

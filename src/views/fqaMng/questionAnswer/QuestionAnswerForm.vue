@@ -105,7 +105,7 @@ import BaseDatePicker from "@/components/common/datepicker/BaseDatePicker.vue";
 import InputBase from "@/components/common/input/InputBase.vue";
 import TextArea from "@/components/common/input/TextArea.vue";
 import router from "@/router";
-import { SCREEN } from "@/router/screen";
+import { fqaRoute } from "@/router/routeItems/fqaRoute";
 import { commonStore } from "@/stores/common";
 import { AdQuestionAnswerDetailDTO } from "@/stores/fqaMng/questionAnswer/questionAnswer.type";
 
@@ -133,6 +133,6 @@ const dataDetail = ref<AdQuestionAnswerDetailDTO>({
 });
 
 const back = () => {
-  router.push({ path: SCREEN.questionAnswerMng.path });
+  router.push({ path: fqaRoute.questionAnswerMng.path });
 };
 </script>

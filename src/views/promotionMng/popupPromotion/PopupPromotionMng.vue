@@ -95,7 +95,7 @@ import {
   PAGINATION_PAGE_SIZE_SELECTOR,
 } from "@/constants/screen.const";
 import router from "@/router";
-import { SCREEN } from "@/router/screen";
+import { promotionRoute } from "@/router/routeItems/promotionRoute";
 import { commonStore } from "@/stores/common";
 import { getListCodeMng } from "@/stores/common/codeMng/codeMng.service";
 import { CodeMngModel } from "@/stores/common/codeMng/codeMng.type";
@@ -208,14 +208,14 @@ onBeforeMount(async () => {
 
 const goActionCreate = () => {
   router.push({
-    name: SCREEN.popupPromotionFrom.name,
+    name: promotionRoute.popupPromotionFrom.name,
     params: { mode: MODE_CREATE },
   });
 };
 
 function goAction(data: AdPopupNoticeResDTO) {
   router.push({
-    name: SCREEN.popupPromotionFrom.name,
+    name: promotionRoute.popupPromotionFrom.name,
     params: { mode: MODE_CREATE },
     state: { id: data.popupNoticeSeq },
   });

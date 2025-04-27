@@ -109,7 +109,7 @@ import InputFileBase from "@/components/common/input/InputFileBase.vue";
 import { CD_ID_USE, UP_CD_USE_YN } from "@/constants/common.const";
 import { FILE_TYPE_IMAGE, MODE_EDIT } from "@/constants/screen.const";
 import router from "@/router";
-import { SCREEN } from "@/router/screen";
+import { promotionRoute } from "@/router/routeItems/promotionRoute";
 import { commonStore } from "@/stores/common";
 import { getListCodeMng } from "@/stores/common/codeMng/codeMng.service";
 import { CodeMngModel } from "@/stores/common/codeMng/codeMng.type";
@@ -167,7 +167,7 @@ onBeforeMount(async () => {
 });
 
 const back = () => {
-  router.push({ path: SCREEN.popupPromotion.path });
+  router.push({ path: promotionRoute.popupPromotion.path });
 };
 const onSave = async () => {
   if (store.check) {

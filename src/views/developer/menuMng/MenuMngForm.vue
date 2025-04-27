@@ -130,7 +130,7 @@ import {
   UP_CD_USE_YN,
 } from "@/constants/common.const";
 import router from "@/router";
-import { SCREEN } from "@/router/screen";
+import { developRoute } from "@/router/routeItems/developRoute";
 import { commonStore } from "@/stores/common";
 import { getListCodeMng } from "@/stores/common/codeMng/codeMng.service";
 import { CodeMngModel } from "@/stores/common/codeMng/codeMng.type";
@@ -214,7 +214,7 @@ onBeforeMount(async () => {
 });
 
 const back = () => {
-  router.push({ path: SCREEN.menuManagement.path });
+  router.push({ path: developRoute.menuManagement.path });
 };
 
 const onSave = async () => {

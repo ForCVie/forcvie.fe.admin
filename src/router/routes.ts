@@ -1,10 +1,21 @@
 import {SCREEN} from './screen';
 import authMiddleware from '@/middleware/auth';
 import logMiddleware from '@/middleware/log'
+import { developRoute } from './routeItems/developRoute';
+import { fqaRoute } from './routeItems/fqaRoute';
+import { promotionRoute } from './routeItems/promotionRoute';
 
 const getView = (path: any) => {
   return () => import(`@/views/${path}.vue`);
 };
+
+const getRouteItems = (route: any) => {
+  return Object.values(route).map((screen:any) => ({
+    path: screen.path,
+    name: screen.name,
+    component: screen.component,
+  }))
+}
 
 export const routes = [
   {
@@ -21,81 +32,9 @@ export const routes = [
         meta: {title: 'TemplateUi'},
         component: getView('TemplateUiYeongsang'),
       },
-      {
-        path: SCREEN.resourceManagement.path,
-        name: SCREEN.resourceManagement.name,
-        component: import('@/views/developer/resourceMng/ResourceMngList.vue'),
-      },
-      {
-        path: SCREEN.menuManagement.path,
-        name: SCREEN.menuManagement.name,
-        component: import('@/views/developer/menuMng/MenuMngList.vue'),
-      },
-      {
-        path: SCREEN.menuManagementForm.path,
-        name: SCREEN.menuManagementForm.name,
-        component: import('@/views/developer/menuMng/MenuMngForm.vue'),
-      },
-      {
-        path: SCREEN.roleManagement.path,
-        name: SCREEN.roleManagement.name,
-        component: import('@/views/developer/roleMng/RoleMngList.vue'),
-      },
-      {
-        path: SCREEN.roleManagementForm.path,
-        name: SCREEN.roleManagementForm.name,
-        component: import('@/views/developer/roleMng/RoleMngForm.vue'),
-      },
-      {
-        path: SCREEN.noticeManagement.path,
-        name: SCREEN.noticeManagement.name,
-        component: import('@/views/fqaMng/notice/NoticeMng.vue'),
-      },
-      {
-        path: SCREEN.noticeManagementForm.path,
-        name: SCREEN.noticeManagementForm.name,
-        component: import('@/views/fqaMng/notice/NoticeForm.vue'),
-      },
-      {
-        path: SCREEN.questionAnswerMng.path,
-        name: SCREEN.questionAnswerMng.name,
-        component: import('@/views/fqaMng/questionAnswer/QuestionAnswerMng.vue'),
-      },
-      {
-        path: SCREEN.questionAnswerMngForm.path,
-        name: SCREEN.questionAnswerMngForm.name,
-        component: import('@/views/fqaMng/questionAnswer/QuestionAnswerForm.vue'),
-      },
-      {
-        path: SCREEN.bannerMng.path,
-        name: SCREEN.bannerMng.name,
-        component: import('@/views/promotionMng/bannerMng/BannerMng.vue'),
-      },
-      {
-        path: SCREEN.bannerMngForm.path,
-        name: SCREEN.bannerMngForm.name,
-        component: import('@/views/promotionMng/bannerMng/BannerMngForm.vue'),
-      },
-      {
-        path: SCREEN.bannerTeeMng.path,
-        name: SCREEN.bannerTeeMng.name,
-        component: import('@/views/promotionMng/bannerTee/BannerTee.vue'),
-      },
-      {
-        path: SCREEN.bannerTeeMngForm.path,
-        name: SCREEN.bannerTeeMngForm.name,
-        component: import('@/views/promotionMng/bannerTee/BannerTeeForm.vue'),
-      },
-      {
-        path: SCREEN.popupPromotion.path,
-        name: SCREEN.popupPromotion.name,
-        component: import('@/views/promotionMng/popupPromotion/PopupPromotionMng.vue'),
-      },
-      {
-        path: SCREEN.popupPromotionFrom.path,
-        name: SCREEN.popupPromotionFrom.name,
-        component: import('@/views/promotionMng/popupPromotion/PopupPromotionForm.vue'),
-      },
+      ...getRouteItems(developRoute),
+      ...getRouteItems(fqaRoute),
+      ...getRouteItems(promotionRoute),
     ],
   },
   // {

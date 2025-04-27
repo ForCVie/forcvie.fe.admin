@@ -103,7 +103,7 @@ import {
   UP_CD_USE_YN,
 } from "@/constants/common.const";
 import router from "@/router";
-import { SCREEN } from "@/router/screen";
+import { developRoute } from "@/router/routeItems/developRoute";
 import { commonStore } from "@/stores/common";
 import { getListCodeMng } from "@/stores/common/codeMng/codeMng.service";
 import { CodeMngModel } from "@/stores/common/codeMng/codeMng.type";
@@ -175,7 +175,7 @@ function buildMenu(arr: any, parentId = "") {
     }));
 }
 const back = () => {
-  router.push({ path: SCREEN.roleManagement.path });
+  router.push({ path: developRoute.roleManagement.path });
 };
 
 const onSave = async () => {

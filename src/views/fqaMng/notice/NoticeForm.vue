@@ -113,7 +113,7 @@ import {
   UP_CD_NOTICE_TOP_FIX,
 } from "@/constants/common.const";
 import router from "@/router";
-import { SCREEN } from "@/router/screen";
+import { fqaRoute } from "@/router/routeItems/fqaRoute";
 import { commonStore } from "@/stores/common";
 import { getListCodeMng } from "@/stores/common/codeMng/codeMng.service";
 import { CodeMngModel } from "@/stores/common/codeMng/codeMng.type";
@@ -214,7 +214,7 @@ onBeforeMount(async () => {
 });
 
 const back = () => {
-  router.push({ path: SCREEN.noticeManagement.path });
+  router.push({ path: fqaRoute.noticeManagement.path });
 };
 
 const onSave = async () => {
