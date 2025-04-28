@@ -4,6 +4,7 @@ import logMiddleware from '@/middleware/log'
 import { developRoute } from './routeItems/developRoute';
 import { fqaRoute } from './routeItems/fqaRoute';
 import { promotionRoute } from './routeItems/promotionRoute';
+import { accountCreationRoute } from './routeItems/accountCreationRoute';
 
 const getView = (path: any) => {
   return () => import(`@/views/${path}.vue`);
@@ -35,6 +36,7 @@ export const routes = [
       ...getRouteItems(developRoute),
       ...getRouteItems(fqaRoute),
       ...getRouteItems(promotionRoute),
+      ...getRouteItems(accountCreationRoute)
     ],
   },
   // {
