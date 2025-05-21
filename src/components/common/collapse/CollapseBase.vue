@@ -50,12 +50,10 @@ export default {
     const transitionRef = ref<HTMLElement | null>(null)
     const heightSlot = ref('')
 
-    onUpdated(async () => {
-      setTimeout( async ()=>{
-        await nextTick();
-        heightSlot.value = `${transitionRef.value?.offsetHeight}px`;
-      },100)
-    })
+    setTimeout( async ()=>{
+      await nextTick();
+      heightSlot.value = `${transitionRef.value?.offsetHeight}px`;
+    },100)
     return {
       transitionRef,
       heightSlot
@@ -71,7 +69,7 @@ export default {
 }
 
 .transition_card {
-  padding: 1px 50px 68px;
+  padding: 1px 24px 32px;
   background-color: white;
 }
 

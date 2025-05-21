@@ -1,5 +1,6 @@
 export type AdOwnerResDTO = {
     id: string;
+    rowNum: number;
     userName: string;
     fullName: string;
 }
@@ -22,6 +23,7 @@ export type AdOwnerDetailDTO = {
     address: string;
     nationality: string;
     avatar: string;
+    lockYn: string;
     foodStores: AdFoodStoreDetailDTO[];
 }
 
@@ -36,4 +38,5 @@ export type AdFoodStoreDetailDTO = {
     isBadge: string;
     avatar: string;
     isActivity: string;
+        openCollapse: boolean;
 }

@@ -24,6 +24,8 @@ export type AdClientDetailDTO = {
     address: string;
     nationality: string;
     avatar: string;
+    lockYn: string;
+    listAddress: AdUserAddressDTO[];
 }
 
 export type AdClientMngRequest = {
@@ -37,4 +39,10 @@ export type AdClientMngRequest = {
     address: string;
     nationality: string;
     avatar: string;
+}
+
+export type AdUserAddressDTO = {
+    userAddressSeq: string;
+    content: string;
+    isDefault: string;
 }

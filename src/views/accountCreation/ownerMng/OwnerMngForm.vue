@@ -1,262 +1,340 @@
 <template>
   <section id="content" class="content_wrapper grid_content" tabindex="0">
     <Breadcrumb
-      :pageTitle="pageTitle"
-      :breadcrumbItems="breadcrumbItems"
+        :pageTitle="pageTitle"
+        :breadcrumbItems="breadcrumbItems"
     ></Breadcrumb>
 
     <div class="box dp_block">
       <div class="box_section">
-        <div class="search_box col_3">
-          <ul>
-            <li>
-              <p>Tên Menu</p>
-              <InputBase v-model:modelValue="dataSearch.nm" id="nm" />
-            </li>
-            <li>
-              <p>Sử Dụng</p>
-              <RadiobuttonBase
-                v-for="item in radioUseYn"
-                :value="item.cdId"
-                v-model="dataSearch.useYn"
-                :id="`${item.cdId}_${item.upCdId}`"
-                :name="`${item.cdId}`"
-                :key="item.cdId"
-                :checked="item.cdId == dataSearch.useYn"
-                :label="`${item.cdNm}`"
+        <table class="tbl_row">
+          <colgroup>
+            <col style="width: 18%"/>
+            <col style="width: auto"/>
+          </colgroup>
+          <tbody>
+          <tr>
+            <th scope="row">UserName</th>
+            <td class="td_input">
+              <InputBase
+                  v-model:modelValue="dataDetail.userName"
+                  id="userName"
+                  readonly="readonly"
               />
-            </li>
-            <li>
-              <p>Loại Site</p>
-              <SelectBoxBase
-                :id="'siteType'"
-                :name="'siteType'"
-                v-model="dataSearch.siteType"
-                :data="listSiteType"
-                :required="true"
+            </td>
+          </tr>
+          <tr>
+            <th scope="row" class="required">Password</th>
+            <td>
+              <InputBase
+                  v-model:modelValue="dataDetail.password"
+                  id="password"
               />
-            </li>
-            <li>
-              <p>Menu Cha</p>
-              <SelectBoxBaseSearch
-                :id="'parentId'"
-                :name="'parentId'"
-                v-model="dataSearch.parentId"
-                :data="listMenuParent"
-                :value-select-all="t('common.select')"
+            </td>
+          </tr>
+          <tr>
+            <th scope="row" class="required">Họ và Tên</th>
+            <td>
+              <InputBase
+                  v-model:modelValue="dataDetail.fullName"
+                  id="fullName"
+                  required
               />
-            </li>
-          </ul>
-        </div>
-        <div class="btn_group btn_end">
-          <button
-            class="button btn_xs btn_lightgray btn_responsive"
-            @click="clearFormSearch()"
-          >
-            {{ t("common.reset") }}
-          </button>
-          <button
-            class="button btn_xs btn_blue btn_responsive"
-            @click="searchFormData()"
-          >
-            {{ t("common.search") }}
-          </button>
-        </div>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Ngày Sinh</th>
+            <td>
+              <BaseDatePicker
+                  v-model:modelValue="dataDetail.date"
+                  id="date"
+              />
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Điện Thoại</th>
+            <td>
+              <InputBase
+                  v-model:modelValue="dataDetail.phone"
+                  id="phone"
+              />
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Email</th>
+            <td>
+              <InputBase
+                  v-model:modelValue="dataDetail.email"
+                  id="email"
+              />
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Địa chỉ</th>
+            <td>
+              <InputBase
+                  v-model:modelValue="dataDetail.address"
+                  id="address"
+              />
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Quốc Tịch</th>
+            <td>
+              <InputBase
+                  v-model:modelValue="dataDetail.nationality"
+                  id="nationality"
+              />
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Ảnh</th>
+            <td>
+              <InputBase
+                  v-model:modelValue="dataDetail.address"
+                  id="address"
+              />
+            </td>
+          </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
-    <div class="box dp_block">
-      <div class="box_inner">
-        <GridComponentV2
-          :rowData="data"
-          :columnDefs="columnDefs"
-          :paginationClientFlag="false"
-          :paginationPageSize="paginationPageSize"
-          @customPagination="fnPagination"
-          :totalRecord="totalRecord"
-          :paginationPageSizeSelector="paginationPageSizeSelector"
+    <div v-for="(item, index) in dataDetail.foodStores">
+      <button @click="deleteAddress(index)" class="button btn_xs btn_blue">Xóa Cửa Hàng</button>
+      <CollapseBase :isShow="item.openCollapse" :isCheck="true"
+                    :title="`Cửa Hàng Số ${index + 1}`"
+                    :onClick="() => {item.openCollapse = !item.openCollapse}">
+        <div class="box_section mg_t20">
+          <table class="tbl_row">
+            <colgroup>
+              <col style="width: 18%"/>
+              <col style="width: auto"/>
+            </colgroup>
+            <tbody>
+            <tr>
+              <th scope="row">Tên Cửa Hàng</th>
+              <td>
+                <InputBase
+                    v-model:modelValue="item.nm"
+                    id="nationality"
+                />
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">Địa Chỉ</th>
+              <td>
+                <InputBase
+                    v-model:modelValue="item.address"
+                    id="nationality"
+                />
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">Điện Thoại quản lý</th>
+              <td>
+                <InputBase
+                    v-model:modelValue="item.phoneOwner"
+                    id="nationality"
+                />
+                <CheckboxBase v-model:modelValue="item.isShowPhoneOwner" :label="'Hiển thị'" />
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">Điện Thoại</th>
+              <td>
+                <InputBase
+                    v-model:modelValue="item.phoneSp"
+                    id="nationality"
+                />
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">Huy Hiệu</th>
+              <td>
+                <CheckboxBase v-model:modelValue="item.isBadge" />
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">Ảnh nền</th>
+              <td>
+                <CheckboxBase v-model:modelValue="item.isBadge" :label="'Hiển thị'" />
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">Hoạt Động</th>
+              <td>
+                <CheckboxBase v-model:modelValue="item.isActivity" />
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </CollapseBase>
+    </div>
+    <div class="box_section">
+      <div class="btn_area">
+        <button type="button" class="button btn_xs btn_white" @click="back()">
+          {{ t("common.list") }}
+        </button>
+        <button type="button" class="button btn_xs btn_blue" @click="onSave">
+          {{ t("common.save") }}
+        </button>
+        <button type="button" class="button btn_xs btn_blue" @click="addFoodStore()">
+          Thêm cửa hàng
+        </button>
+        <button
+            v-if="id"
+            type="button"
+            class="button btn_xs btn_blue"
         >
-          <template #button>
-            <div>
-              <button
-                type="button"
-                class="btn_round btn_xs btn_primary mg_l10"
-                @click="goActionCreate"
-              >
-                {{ t("common.add") }}
-              </button>
-            </div>
-          </template>
-        </GridComponentV2>
+          Khóa Tài Khoản (Tính Năng Sắp Ra Mắt)
+        </button>
+        <button
+            v-if="id"
+            type="button"
+            class="button btn_xs btn_blue"
+        >
+          Mở Khóa Tài Khoản (Tính Năng Sắp Ra Mắt)
+        </button>
+        <button
+            v-if="id"
+            type="button"
+            class="button btn_xs btn_blue"
+            @click="onRemove"
+        >
+          {{ t("common.delete") }}
+        </button>
       </div>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import LinkGridComponent from "@/components/common/grid/LinkGridComponent.vue";
+import {useAlert, useConfirm} from "@/components/common/composables/useAlert";
 import InputBase from "@/components/common/input/InputBase.vue";
-import { UP_CD_SITE, UP_CD_USE_YN } from "@/constants/common.const";
-import {
-  MODE_CREATE,
-  PAGINATION_PAGE_SIZE,
-  PAGINATION_PAGE_SIZE_SELECTOR,
-} from "@/constants/screen.const";
 import router from "@/router";
-import { developRoute } from "@/router/routeItems/developRoute";
-import { commonStore } from "@/stores/common";
-import { getListCodeMng } from "@/stores/common/codeMng/codeMng.service";
-import { CodeMngModel } from "@/stores/common/codeMng/codeMng.type";
-import {
-  getDataForm,
-  getPageData,
-} from "@/stores/developer/menu/menuMng.service";
-import {
-  AdMenuFilterRequest,
-  AdMenuResDTO,
-} from "@/stores/developer/menu/menuMng.type";
+import {commonStore} from "@/stores/common";
+import BaseDatePicker from "@/components/common/datepicker/BaseDatePicker.vue";
+import {accountCreationRoute} from "@/router/routeItems/accountCreationRoute";
+import {STATE_N, STATE_Y} from "@/constants/common.const";
+import type {AdFoodStoreDetailDTO, AdOwnerDetailDTO} from "@/stores/accountCreation/ownerMng/ownerMng.type";
+import {getDataDetail, removeData, saveData} from "@/stores/accountCreation/ownerMng/ownerMng.service";
+import CollapseBase from "@/components/common/collapse/CollapseBase.vue";
+import CheckboxBase from "@/components/common/input/CheckboxBase.vue";
 
-const { t } = useI18n();
+const {t} = useI18n();
 const store = commonStore();
+const alert = useAlert();
+const confirm = useConfirm();
 
-const pageTitle = ref("Quản Lý Role");
+const id = ref<string>();
+
+const pageTitle = ref("Quản Lý Nhà Bán Hàng");
 const breadcrumbItems = ref([
-  { label: t("talentEduGoalsMng.breadcrumb.01"), link: "/" },
-]);
-const paginationPageSize = ref(PAGINATION_PAGE_SIZE);
-const paginationPageSizeSelector = ref(PAGINATION_PAGE_SIZE_SELECTOR);
-const totalRecord = ref(0);
-
-const columnDefs = ref([
-  {
-    headerName: t("common.rowNum"),
-    flex: 0.1,
-    field: "rowNum",
-    cellStyle: {
-      textAlign: "center",
-    },
-  },
-  {
-    headerName: "Tên",
-    field: "nm",
-    cellRenderer: LinkGridComponent,
-    cellRendererParams: { onCustomEvent: goAction },
-  },
-  {
-    headerName: "Site Type",
-    field: "siteType",
-    cellStyle: {
-      textAlign: "center",
-    },
-  },
-  {
-    headerName: "Sử dụng",
-    field: "useYn",
-    cellStyle: {
-      textAlign: "center",
-    },
-  },
-  {
-    headerName: "Menu Cha",
-    field: "parent",
-    cellStyle: {
-      textAlign: "center",
-    },
-  },
+  {label: t("talentEduGoalsMng.breadcrumb.01"), link: "/"},
 ]);
 
-const dataSearch = ref<AdMenuFilterRequest>({
-  nm: "",
-  parentId: "",
-  siteType: "",
-  useYn: "",
-  page: 1,
-  size: PAGINATION_PAGE_SIZE,
-  sort: "",
+const dataDetail = ref<AdOwnerDetailDTO>({
+  id: '',
+  userName: '',
+  password: '',
+  fullName: '',
+  date: '',
+  phone: '',
+  email: '',
+  address: '',
+  nationality: '',
+  avatar: '',
+  lockYn: '',
+  foodStores: []
 });
-
-const radioUseYn = ref<CodeMngModel[]>();
-const listSiteType = ref<CodeMngModel[]>();
-const listMenuParent = ref<CodeMngModel[]>();
-
-const data = ref([]);
 
 onBeforeMount(async () => {
   store.setLoading(true);
-  await getListCodeMng({ upCdIdList: [UP_CD_USE_YN, UP_CD_SITE] }).then(
-    (res) => {
-      radioUseYn.value = res.data.data.filter(
-        (item: CodeMngModel) => item.upCdId == UP_CD_USE_YN
-      );
-      listSiteType.value = res.data.data.filter(
-        (item: CodeMngModel) => item.upCdId == UP_CD_SITE
-      );
 
-      radioUseYn.value?.unshift({
-        cdId: "",
-        cdNm: t("common.select"),
-        upCdId: UP_CD_USE_YN,
-      });
-      listSiteType.value?.unshift({
-        cdId: "",
-        cdNm: t("common.select"),
-        upCdId: UP_CD_USE_YN,
-      });
-    }
-  );
-  await getDataForm([""]).then((res) => {
-    listMenuParent.value = res.data.data.parentList;
-    listMenuParent.value?.unshift({
-      cdId: "",
-      cdNm: t("common.select"),
-      upCdId: "MENU_PARENT",
+  id.value = window.history.state.id;
+  if (id.value)
+    await getDataDetail(id.value).then((res) => {
+      dataDetail.value = res.data.data;
     });
-  });
+
   store.setLoading(false);
 });
 
-const goActionCreate = () => {
-  router.push({
-    name: developRoute.menuManagementForm.name,
-    params: { mode: MODE_CREATE },
-  });
+const back = () => {
+  router.push({path: accountCreationRoute.ownerMng.path});
 };
 
-function goAction(data: AdMenuResDTO) {
-  router.push({
-    name: developRoute.menuManagementForm.name,
-    params: { mode: MODE_CREATE },
-    state: { id: data.menuId },
-  });
+const onSave = async () => {
+  if (store.check) {
+    alert(
+        t("common.messageValidateRequired"),
+        t("common.alertTitle"),
+        () => {
+        }
+    );
+    return;
+  }
+  confirm(
+      t("common.message.confirmSave"),
+      t("common.confirmTitle"),
+      async () => {
+        const dataSave = {
+          ...dataDetail.value,
+        } as AdOwnerDetailDTO;
+        await saveData(dataSave).then((res) => {
+          alert(t("common.message.saveSuccess"), t("common.alertTitle"), () => {
+            back();
+          });
+        });
+      }
+  );
+};
+
+const onRemove = async () => {
+  confirm(
+      t("common.message.confirmDelete"),
+      t("common.confirmTitle"),
+      async () => {
+        if (id.value) {
+          await removeData(id.value).then((res) => {
+            alert(t("common.message.deleteSuccess"), t("common.alertTitle"), () => {
+              back();
+            });
+          });
+        }
+      }
+  );
+};
+
+const addFoodStore = () => {
+  dataDetail.value.foodStores.push({
+    foodStoreSeq: '',
+    nm: '',
+    ownerSeq: '',
+    address: '',
+    phoneOwner: '',
+    phoneSp: '',
+    isShowPhoneOwner: '',
+    isBadge: '',
+    avatar: '',
+    isActivity: '',
+    openCollapse: true
+  })
 }
 
-const fnPagination = async (pageNumber: number, pagesSize: number) => {
-  dataSearch.value.page = pageNumber;
-  dataSearch.value.size = pagesSize;
-  await getPageData(dataSearch.value).then((res) => {
-    totalRecord.value = res.data.data.totalRecord;
-    data.value = res.data.data.data.map((item: AdMenuResDTO, index: number) => {
-      item.rowNum =
-        (dataSearch.value.page - 1) * dataSearch.value.size + index + 1;
-      return item;
-    });
-  });
-};
-
-const clearFormSearch = () => {
-  dataSearch.value = {
-    nm: "",
-    parentId: "",
-    siteType: "",
-    useYn: "",
-    page: 1,
-    size: PAGINATION_PAGE_SIZE,
-    sort: "",
-  };
-};
-
-const searchFormData = () => {
-  dataSearch.value.page = 1;
-  fnPagination(dataSearch.value.page, dataSearch.value.size);
-};
+const deleteAddress = (indexDel: number) => {
+  confirm(
+      t("common.message.confirmDelete"),
+      t("common.confirmTitle"),
+      async () => {
+        alert(t("common.message.deleteSuccess"), t("common.alertTitle"), () => {
+          dataDetail.value.foodStores.splice(indexDel, 1);
+        });
+      }
+  );
+}
 </script>

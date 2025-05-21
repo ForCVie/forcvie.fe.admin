@@ -67,7 +67,6 @@
 <script setup lang="ts">
 import LinkGridComponent from "@/components/common/grid/LinkGridComponent.vue";
 import InputBase from "@/components/common/input/InputBase.vue";
-import { UP_CD_SITE, UP_CD_USE_YN } from "@/constants/common.const";
 import {
   MODE_CREATE,
   PAGINATION_PAGE_SIZE,
@@ -75,17 +74,14 @@ import {
 } from "@/constants/screen.const";
 import router from "@/router";
 import { accountCreationRoute } from "@/router/routeItems/accountCreationRoute";
-import { developRoute } from "@/router/routeItems/developRoute";
 import { getPageData } from "@/stores/accountCreation/clientMng/clientMng.service";
 import { AdClientFilterRequest, AdClientResDTO } from "@/stores/accountCreation/clientMng/clientMng.type";
 import { commonStore } from "@/stores/common";
-import { getListCodeMng } from "@/stores/common/codeMng/codeMng.service";
-import { CodeMngModel } from "@/stores/common/codeMng/codeMng.type";
 
 const { t } = useI18n();
 const store = commonStore();
 
-const pageTitle = ref("Quản Lý Role");
+const pageTitle = ref("Quản Lý Khách Hàng");
 const breadcrumbItems = ref([
   { label: t("talentEduGoalsMng.breadcrumb.01"), link: "/" },
 ]);
@@ -103,28 +99,14 @@ const columnDefs = ref([
     },
   },
   {
-    headerName: "Tên",
-    field: "nm",
+    headerName: "UserName",
+    field: "userName",
     cellRenderer: LinkGridComponent,
     cellRendererParams: { onCustomEvent: goAction },
   },
   {
-    headerName: "Site Type",
-    field: "siteType",
-    cellStyle: {
-      textAlign: "center",
-    },
-  },
-  {
-    headerName: "Sử dụng",
-    field: "useYn",
-    cellStyle: {
-      textAlign: "center",
-    },
-  },
-  {
-    headerName: "Menu Cha",
-    field: "parent",
+    headerName: "Họ Tên",
+    field: "fullName",
     cellStyle: {
       textAlign: "center",
     },
@@ -138,10 +120,6 @@ const dataSearch = ref<AdClientFilterRequest>({
   size: PAGINATION_PAGE_SIZE,
   sort: "",
 });
-
-const radioUseYn = ref<CodeMngModel[]>();
-const listSiteType = ref<CodeMngModel[]>();
-const listMenuParent = ref<CodeMngModel[]>();
 
 const data = ref([]);
 
