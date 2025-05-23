@@ -30,6 +30,7 @@ export type AdOwnerDetailDTO = {
 export type AdFoodStoreDetailDTO = {
     foodStoreSeq: string;
     nm: string;
+    code: string;
     ownerSeq: string;
     address: string;
     phoneOwner: string;
@@ -38,5 +39,33 @@ export type AdFoodStoreDetailDTO = {
     isBadge: string;
     avatar: string;
     isActivity: string;
-        openCollapse: boolean;
+    openCollapse: boolean;
+}
+
+export type AdOwnerRequest = {
+    id: string;
+    userName: string;
+    password: string;
+    fullName: string;
+    date: string;
+    phone: string;
+    email: string;
+    address: string;
+    nationality: string;
+    avatar: string;
+    lockYn: string;
+    foodStores: AdFoodStoreRequest[];
+}
+
+export type AdFoodStoreRequest = {
+    foodStoreSeq: string;
+    nm: string;
+    ownerSeq: string;
+    address: string;
+    phoneOwner: string;
+    phoneSp: string;
+    isShowPhoneOwner: string;
+    isBadge: string;
+    avatar: string;
+    isActivity: string;
 }

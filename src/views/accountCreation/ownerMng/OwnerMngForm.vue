@@ -118,7 +118,17 @@
               <td>
                 <InputBase
                     v-model:modelValue="item.nm"
-                    id="nationality"
+                    :id="`nm_${index}`"
+                />
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">Mã Cửa Hàng</th>
+              <td>
+                <InputBase
+                    v-model:modelValue="item.code"
+                    :id="`code_${index}`"
+                    readonly="readonly"
                 />
               </td>
             </tr>
@@ -127,7 +137,7 @@
               <td>
                 <InputBase
                     v-model:modelValue="item.address"
-                    id="nationality"
+                    :id="`address_${index}`"
                 />
               </td>
             </tr>
@@ -136,9 +146,9 @@
               <td>
                 <InputBase
                     v-model:modelValue="item.phoneOwner"
-                    id="nationality"
+                    :id="`phoneOwner_${index}`"
                 />
-                <CheckboxBase v-model:modelValue="item.isShowPhoneOwner" :label="'Hiển thị'" />
+                <CheckboxBase :id="`isShowPhoneOwner_${index}`" v-model="item.isShowPhoneOwner" :trueValue="STATE_Y" :falseValue="STATE_N" :label="'Hiển thị'" />
               </td>
             </tr>
             <tr>
@@ -146,32 +156,32 @@
               <td>
                 <InputBase
                     v-model:modelValue="item.phoneSp"
-                    id="nationality"
+                    :id="`phoneSp_${index}`"
                 />
               </td>
             </tr>
             <tr>
               <th scope="row">Huy Hiệu</th>
               <td>
-                <CheckboxBase v-model:modelValue="item.isBadge" />
+                <CheckboxBase :id="`isBadge_${index}`" v-model:modelValue="item.isBadge" :trueValue="STATE_Y" :falseValue="STATE_N" :label="'Hiển thị'" />
               </td>
             </tr>
             <tr>
               <th scope="row">Ảnh nền</th>
               <td>
-                <CheckboxBase v-model:modelValue="item.isBadge" :label="'Hiển thị'" />
+<!--                <CheckboxBase :id="`isBadge_${index}`" v-model:modelValue="item.isBadge" :value="STATE_Y" :label="'Hiển thị'" />-->
               </td>
             </tr>
             <tr>
               <th scope="row">Hoạt Động</th>
               <td>
-                <CheckboxBase v-model:modelValue="item.isActivity" />
+                <CheckboxBase :id="`isActivity_${index}`" :trueValue="STATE_Y" :falseValue="STATE_N" v-model:modelValue="item.isActivity" :label="'Hoat Dong'" />
               </td>
             </tr>
             </tbody>
           </table>
+          {{item}}
         </div>
-
       </CollapseBase>
     </div>
     <div class="box_section">
@@ -220,7 +230,11 @@ import {commonStore} from "@/stores/common";
 import BaseDatePicker from "@/components/common/datepicker/BaseDatePicker.vue";
 import {accountCreationRoute} from "@/router/routeItems/accountCreationRoute";
 import {STATE_N, STATE_Y} from "@/constants/common.const";
-import type {AdFoodStoreDetailDTO, AdOwnerDetailDTO} from "@/stores/accountCreation/ownerMng/ownerMng.type";
+import type {
+  AdFoodStoreDetailDTO,
+  AdOwnerDetailDTO,
+  AdOwnerRequest
+} from "@/stores/accountCreation/ownerMng/ownerMng.type";
 import {getDataDetail, removeData, saveData} from "@/stores/accountCreation/ownerMng/ownerMng.service";
 import CollapseBase from "@/components/common/collapse/CollapseBase.vue";
 import CheckboxBase from "@/components/common/input/CheckboxBase.vue";
@@ -259,6 +273,15 @@ onBeforeMount(async () => {
   if (id.value)
     await getDataDetail(id.value).then((res) => {
       dataDetail.value = res.data.data;
+
+      if (dataDetail.value.foodStores.length != 0) {
+        dataDetail.value.foodStores = dataDetail.value.foodStores.map((item) => {
+          return {
+            ...item,
+            openCollapse: true,
+          }
+        });
+      }
     });
 
   store.setLoading(false);
@@ -282,9 +305,10 @@ const onSave = async () => {
       t("common.message.confirmSave"),
       t("common.confirmTitle"),
       async () => {
-        const dataSave = {
+        const dataSave: AdOwnerRequest = {
           ...dataDetail.value,
-        } as AdOwnerDetailDTO;
+          foodStores: dataDetail.value.foodStores.map(({ openCollapse, code, ...rest }) => rest)
+        };
         await saveData(dataSave).then((res) => {
           alert(t("common.message.saveSuccess"), t("common.alertTitle"), () => {
             back();
@@ -314,6 +338,7 @@ const addFoodStore = () => {
   dataDetail.value.foodStores.push({
     foodStoreSeq: '',
     nm: '',
+    code: '',
     ownerSeq: '',
     address: '',
     phoneOwner: '',
