@@ -876,6 +876,33 @@ body.swal2-height-auto {
   margin-right: 0;
 }
 
+.company_sns {
+  grid-column: span 2;
+}
+.company_sns ul {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+.company_sns ul li {
+  color: var(--gray50);
+}
+.company_sns ul li i {
+  display: inline-block;
+  margin-right: 8px;
+  width: 24px; height: 24px;
+  background-repeat: no-repeat;
+  background-position: left center;
+}
+.company_sns ul li i.insta {
+  background-image: url(../../images/sub/icon_sns_Instagram.svg);
+}
+.company_sns ul li i.youtube {
+  background-image: url(../../images/sub/icon_sns_youtube.svg);
+}
+.company_sns ul li i.facebook {
+  background-image: url(../../images/sub/icon_sns_facebook.svg);
+}
 
 @media screen and (max-width: 1400px) {
   .arrow_slide .swiper-button-prev {
