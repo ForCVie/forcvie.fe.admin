@@ -903,6 +903,9 @@ body.swal2-height-auto {
 .company_sns ul li i.facebook {
   background-image: url(../../images/sub/icon_sns_facebook.svg);
 }
+.company_sns ul li i.tiktok {
+  background-image: url(../../images/sub/icon_sns_titok.svg);
+}
 
 @media screen and (max-width: 1400px) {
   .arrow_slide .swiper-button-prev {
